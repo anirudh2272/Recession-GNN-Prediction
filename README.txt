@@ -1,22 +1,116 @@
-RR MINERS:
+📉 **Recession Prediction using Temporal Graph Neural Networks (TGNN)**
 
-INSTRUCTIONS:
---------------
--> The GNN_pipeline.ipynb is the source code, includes the whole methodology (dataset preparation, Preprocessing, model definitions, model initializations, Training and testing, plotting metrics and final deploying the saved model using Gradio interface on localhost).
+---
 
--> If you don't want to train the models from start and then see the results, the interface folder already has a quick implementation (from our experiments) with required saved files in it. 
+**Overview**
 
--> Go to Interface folder -> open Interface.py in a python environment -> make sure the dependencies and necessary libraries are all available (as listed in comments and also included in imports and libraries) -> Run the code -> open localhost on a browser -> input comma separated values (provided in sample_inputs_for_interface text file in the interface folder) -> click on autofill -> scroll down to predict button -> click on predict -> get prediction outputs.
+This project predicts economic recessions using a Temporal Graph Neural Network (TGNN) by modeling macroeconomic indicators as a dynamic graph.
 
-->The dataset used for the experimentation is also included in the dataset folder( this is a custom dataset created from Economic Features of US Recession - Kaggle dataset)
+Instead of treating variables independently, it captures:
 
--> Make sure to change the dataset path and name in case of a miss match.
----------------------------------------------------------------
+* Relationships between economic indicators
+* How these relationships evolve over time
 
-NOTE: A video demo of how the interface works is also included. (No audio )
-----------------------------------------------------------------
+---
 
--> The final Report is also included in this folder.
+**Approach**
 
+* Nodes → Economic indicators (GDP, CPI, Unemployment, etc.)
+* Edges → Correlation-based relationships
+* Model → TGNN (Graph Convolution + Temporal Learning)
 
+```
+Input Data → Graph Construction → GCN Layers → GRU → Prediction
+```
 
+---
+
+**Dataset**
+
+* 20+ macroeconomic indicators
+* Time range: 1985 – 2023
+* Sources:
+
+  * Federal Reserve (FRED)
+  * BLS
+  * World Bank
+  * IMF
+
+Note: Raw datasets are not included due to size.
+
+---
+
+**Pipeline**
+
+* Data preprocessing and normalization
+* Temporal alignment of multi-frequency data
+* Graph construction (Pearson correlation)
+* Model training (GCN, TGNN)
+* Class imbalance handling (SMOTE, Focal Loss)
+* Evaluation (Accuracy, F1, AUC)
+* Local deployment using Gradio
+
+---
+
+**Results**
+
+Model Performance:
+
+* GCN → Accuracy ~0.87 | F1 ~0.87 | AUC ~0.95
+* TGNN → Accuracy ~0.97 | F1 ~0.95 | AUC ~0.99
+
+Insight: Temporal modeling significantly improves prediction performance.
+
+---
+
+**Run the Project**
+
+```
+python Interface.py
+```
+
+Open in browser:
+
+```
+http://127.0.0.1:7860
+```
+
+---
+
+**Project Structure**
+
+```
+gnn_pipeline.ipynb      → Training pipeline  
+Interface.py           → Prediction interface  
+DataMining_report.pdf  → Detailed report  
+artifacts/             → scaler, features, graph data  
+models/                → trained models  
+```
+
+---
+
+**Limitations**
+
+* Uses linear correlation (no nonlinear relationships)
+* No explainability module
+* Requires careful time-series validation
+
+---
+
+**Future Improvements**
+
+* Graph Attention Networks (GAT / TGAT)
+* Explainable AI (SHAP, GNNExplainer)
+* Real-time data integration
+* API deployment (FastAPI + Docker)
+
+---
+
+**Author**
+
+Anirudh Koganti
+M.S. Computer Science — Missouri S&T
+
+---
+
+⭐ If you found this useful, consider starring the repository
